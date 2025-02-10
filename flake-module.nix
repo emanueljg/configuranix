@@ -229,7 +229,7 @@
           lib.mapAttrs'
             (filename: _:
               let
-                value = (import "${cfgPath}/${filename}" {
+                value = (import "${cfgPath}/${filename}.nix" {
                   config = value;
                   inherit inputs;
                   inherit (config.configuranix) hosts blueprints;
