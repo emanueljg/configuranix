@@ -5,7 +5,6 @@
 
   imports = [
     ./module-sets/nixos.nix
-    ./module-sets/home.nix
   ];
 
   options.configuranix =
@@ -87,7 +86,6 @@
       in
       lib.mkIf config.configuranix.enable {
         nixosConfigurations = mkCfgOutputs "nixos";
-        homeConfigurations = mkCfgOutputs "home";
         deploy = config.configuranix.deploy // {
           nodes = builtins.mapAttrs
             (hostname: hostCfg:
@@ -98,10 +96,6 @@
                   profiles = {
                     system = {
                       path = activate.nixos self.nixosConfigurations.${hostname};
-                    };
-                    home-manager = {
-                      user = self.homeConfigurations.${hostname}.config.home.username;
-                      path = activate.home-manager self.homeConfigurations.${hostname};
                     };
                   };
                 };
